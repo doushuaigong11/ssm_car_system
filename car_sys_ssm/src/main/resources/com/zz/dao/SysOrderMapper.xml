@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zz.dao.SysOrderMapper">
+  <resultMap id="BaseResultMap" type="com.zz.pojo.SysOrder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="getid" jdbcType="INTEGER" property="getid" />
+    <result column="backid" jdbcType="INTEGER" property="backid" />
+    <result column="oprice" jdbcType="DOUBLE" property="oprice" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, cid, uid, getid, backid, oprice, status
+  </sql>
+  <select id="selectByExample" parameterType="com.zz.pojo.SysOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zz.pojo.SysOrderExample">
+    delete from sys_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zz.pojo.SysOrder">
+    insert into sys_order (id, cid, uid, 
+      getid, backid, oprice, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{getid,jdbcType=INTEGER}, #{backid,jdbcType=INTEGER}, #{oprice,jdbcType=DOUBLE}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zz.pojo.SysOrder">
+    insert into sys_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="getid != null">
+        getid,
+      </if>
+      <if test="backid != null">
+        backid,
+      </if>
+      <if test="oprice != null">
+        oprice,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="getid != null">
+        #{getid,jdbcType=INTEGER},
+      </if>
+      <if test="backid != null">
+        #{backid,jdbcType=INTEGER},
+      </if>
+      <if test="oprice != null">
+        #{oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zz.pojo.SysOrderExample" resultType="java.lang.Long">
+    select count(*) from sys_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.getid != null">
+        getid = #{record.getid,jdbcType=INTEGER},
+      </if>
+      <if test="record.backid != null">
+        backid = #{record.backid,jdbcType=INTEGER},
+      </if>
+      <if test="record.oprice != null">
+        oprice = #{record.oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_order
+    set id = #{record.id,jdbcType=INTEGER},
+      cid = #{record.cid,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      getid = #{record.getid,jdbcType=INTEGER},
+      backid = #{record.backid,jdbcType=INTEGER},
+      oprice = #{record.oprice,jdbcType=DOUBLE},
+      status = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zz.pojo.SysOrder">
+    update sys_order
+    <set>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="getid != null">
+        getid = #{getid,jdbcType=INTEGER},
+      </if>
+      <if test="backid != null">
+        backid = #{backid,jdbcType=INTEGER},
+      </if>
+      <if test="oprice != null">
+        oprice = #{oprice,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zz.pojo.SysOrder">
+    update sys_order
+    set cid = #{cid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      getid = #{getid,jdbcType=INTEGER},
+      backid = #{backid,jdbcType=INTEGER},
+      oprice = #{oprice,jdbcType=DOUBLE},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="vorder" type="com.zz.vo.VOrder">
+    <result column="oid" property="oid"></result>
+    <result column="oprice" property="oprice"></result>
+    <result column="cname" property="cname"></result>
+    <result column="getcity" property="getcity"></result>
+    <result column="backcity" property="backcity"></result>
+    <result column="ostatus" property="ostatus"></result>
+  </resultMap>
+
+  <select id="findAllOrder" parameterType="java.lang.Integer" resultMap="vorder" >
+   select o.id oid,o.oprice oprice,c.name cname,city.name getcity,back.name backcity,o.status ostatus
+   from sys_order o
+   inner join sys_car c
+   on o.cid = c.id
+   inner join sys_city city
+   on o.getid = city.id
+   inner join sys_city back
+   on o.backid = back.id
+   where uid = #{uid}
+  </select>
+
+  <delete id="deleteById" parameterType="Integer">
+    delete from sys_order where id = #{id}
+  </delete>
+
+  <delete id="deleteOrders">
+    delete from sys_order
+    where id in
+    <foreach collection="array" open="(" close=")" separator="," item="ids">
+      #{ids}
+    </foreach>
+  </delete>
+
+</mapper>
